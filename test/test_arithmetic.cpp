@@ -20,7 +20,7 @@ TEST(Lexem, Lexem1)
  	EXPECT_EQ(1, t1.prioritet());
  }
  
- TEST(Arithmetic, DivideToTerms)
+ TEST(Arithmetic, DivideToinputLexems)
  {
  	Arithmetic t1("7*8");
  	t1.DivideToinputLexems();	
@@ -42,11 +42,11 @@ TEST(Lexem, Lexem1)
 
  TEST(Arithmetic, CanCalcDiv2)
  { 
-	 Arithmetic t1("1+1+2"); 
+	 Arithmetic t1("1+1*2"); 
 	 t1.DivideToinputLexems();
 	 t1.ConvertToPolish();
 	 double x = t1.Calculate(); 
-	 EXPECT_EQ(4.0, x); 
+	 EXPECT_EQ(3.0, x); 
  }
 
  TEST(Arithmetic,StringConversion)
@@ -93,3 +93,78 @@ TEST(Lexem, Lexem1)
  }
 
  
+ 
+ TEST(Arithmetic,ConvertToPolish1)
+ {
+	 Arithmetic t1("(30+7*6)");//3076*+
+	 t1.DivideToinputLexems();
+	 t1.ConvertToPolish();
+	 EXPECT_EQ(30,t1.GetValuePolishLexems(0));
+	 EXPECT_EQ(7,t1.GetValuePolishLexems(1));
+	 EXPECT_EQ(6,t1.GetValuePolishLexems(2));
+	 EXPECT_EQ(3,t1.GetValuePolishLexems(3));
+	 EXPECT_EQ(1,t1.GetValuePolishLexems(4));
+	
+
+ }
+
+ TEST(Arithmetic,ConvertToPolish2)
+ {
+	 Arithmetic t1("(8+4*2)/(7-3)");//842*+73-/
+	 t1.DivideToinputLexems();
+	 t1.ConvertToPolish();
+	 EXPECT_EQ(8,t1.GetValuePolishLexems(0));
+	 EXPECT_EQ(4,t1.GetValuePolishLexems(1));
+	 EXPECT_EQ(2,t1.GetValuePolishLexems(2));
+	 EXPECT_EQ(3,t1.GetValuePolishLexems(3));
+	 EXPECT_EQ(1,t1.GetValuePolishLexems(4));
+	 EXPECT_EQ(7, t1.GetValuePolishLexems(5)); 
+	 EXPECT_EQ(3, t1.GetValuePolishLexems(6));
+	 EXPECT_EQ(2, t1.GetValuePolishLexems(7));
+	 EXPECT_EQ(4, t1.GetValuePolishLexems(8));
+ 	
+ 	
+	
+
+ }
+
+ TEST(Arithmetic, ConvertToPolish3)
+{
+ 	Arithmetic t1("-(-(8 / 2 + 3 * 2))");//0082/32*+--	 
+ 	t1.DivideToinputLexems();
+ 	t1.ConvertToPolish();
+ 	EXPECT_EQ(0, t1.GetValuePolishLexems(0));
+ 	EXPECT_EQ(0, t1.GetValuePolishLexems(1));
+ 	EXPECT_EQ(8, t1.GetValuePolishLexems(2));
+ 	EXPECT_EQ(2, t1.GetValuePolishLexems(3));
+ 	EXPECT_EQ(4, t1.GetValuePolishLexems(4));
+	EXPECT_EQ(3, t1.GetValuePolishLexems(5)); 
+ 	EXPECT_EQ(2, t1.GetValuePolishLexems(6));
+	EXPECT_EQ(3, t1.GetValuePolishLexems(7));
+ 	EXPECT_EQ(1, t1.GetValuePolishLexems(8));
+ 	EXPECT_EQ(2, t1.GetValuePolishLexems(9));
+ 	EXPECT_EQ(2, t1.GetValuePolishLexems(10));
+ }
+
+
+ TEST(Arithmetic,ConvertToPolish4)
+ {
+	 Arithmetic t1("(9/3*2+5*2)-3*2");//93/2*52*+32*
+	 t1.DivideToinputLexems();
+	 t1.ConvertToPolish();
+	 EXPECT_EQ(9,t1.GetValuePolishLexems(0));
+	 EXPECT_EQ(3,t1.GetValuePolishLexems(1));
+	 EXPECT_EQ(4,t1.GetValuePolishLexems(2));
+	 EXPECT_EQ(2,t1.GetValuePolishLexems(3));
+	 EXPECT_EQ(3,t1.GetValuePolishLexems(4));
+	 EXPECT_EQ(5, t1.GetValuePolishLexems(5)); 
+	 EXPECT_EQ(2, t1.GetValuePolishLexems(6));
+	 EXPECT_EQ(3, t1.GetValuePolishLexems(7));
+	 EXPECT_EQ(1, t1.GetValuePolishLexems(8));
+	 EXPECT_EQ(3, t1.GetValuePolishLexems(9));
+	 EXPECT_EQ(2, t1.GetValuePolishLexems(10));
+	 EXPECT_EQ(3, t1.GetValuePolishLexems(11));
+ 	
+	
+
+ }
